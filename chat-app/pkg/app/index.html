@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat App Demo</title>
+</head>
+<body>
+<main>
+    <header>
+        <h1>Messages</h1>
+    </header>
+    <div style="width: 100%;">
+        <div style="width: 48%; float: left;">
+            <form action="/" method="GET">
+                <input
+                        type="submit"
+                        value="Refresh"
+                        style="width: 300px; height: 30px"
+                />
+            </form>
+
+            {{ range $index, $value := . }}
+            <li>{{ $value.Time }}<strong>@{{ $value.Author }}</strong>: {{ $value.Body }}</li>
+            {{ end }}
+
+        </div>
+        <div style="width: 48%; float: right;">
+            <form action="/" method="POST">
+                <input
+                        autofocus
+                        style="width: 300px; height: 100px"
+                        value=""
+                        placeholder="Enter a new message"
+                        type="text"
+                        name="message"
+                />
+            </form>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-app-remote
+  labels:
+    app: chat-app-remote
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-app-remote
+  template:
+    metadata:
+      labels:
+        app: chat-app-remote
+    spec:
+      containers:
+        - name: chat-app
+          image: taseenjunaid/chat-app:latest
+          env:
+            - name: PORT
+              value: "8000"
+            - name: SENDER
+              value: Remote_user
+            - name: RECEIVER
+              value: Local_user
+            - name: NATS_URL
+              value: "a7d62f596d6eb4e5dbc5e6b87ac63192-1340131761.eu-central-1.elb.amazonaws.com"
+          ports:
+            - containerPort: 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-app-remote
+spec:
+  type: LoadBalancer
+  selector:
+    app: chat-app-remote
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
